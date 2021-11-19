@@ -314,10 +314,9 @@ using KKPEvalElementType0 = EvalElementType[fe_end];
 using KKPEvalElementType1 = KKPEvalElementType0[SquareNum];
 using KKPEvalElementType2 = KKPEvalElementType1[SquareNum];
 struct Evaluator /*: public EvaluatorBase<EvalElementType>*/ {
-    using Base = EvaluatorBase<EvalElementType>;
     static bool allocated;
-    static KPPEvalElementType1* KPP;
-    static KKPEvalElementType1* KKP;
+    static EvalElementType KPP[SquareNum][fe_end][fe_end];
+    static EvalElementType KKP[SquareNum][SquareNum][fe_end];
 
     static std::string addSlashIfNone(const std::string& str) {
         std::string ret = str;
@@ -331,10 +330,8 @@ struct Evaluator /*: public EvaluatorBase<EvalElementType>*/ {
     static void init(const std::string& dirName) {
         if (!allocated) {
             allocated = true;
-            KPP = new KPPEvalElementType1[SquareNum];
-            KKP = new KKPEvalElementType1[SquareNum];
-            memset(KPP, 0, sizeof(KPPEvalElementType1) * (size_t)SquareNum);
-            memset(KKP, 0, sizeof(KKPEvalElementType1) * (size_t)SquareNum);
+            memset(KPP, 0, sizeof(KPP));
+            memset(KKP, 0, sizeof(KKP));
         }
         readEvalFile(dirName);
     }
